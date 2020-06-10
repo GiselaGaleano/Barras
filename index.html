@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <meta charset='utf-8'>
+<title>Sector</title>
 <style> /* CSS styling */
 
   body {
@@ -10,20 +11,20 @@
   .bar {
     border: 1px solid #0b3536;
     border-radius: 6px;
-    fill: #CBA81D;
+    fill: #2894C3;
   }
 
   #viz .barText {
-    fill: #f5faf8;
+    fill: #083463;
     font-weight: 500;
   }
 
   .axisY text, .axisX text, .headerText text{
-    fill: #CD9D2C;
+    fill: #000000;
   }
 
   #viz svg {
-    background-color: #FEFBF4;
+    background-color: #FFFFFF;
   }
 
 </style>
@@ -77,7 +78,7 @@ g.attr('class', 'headerText')
    .attr('transform', 'translate(' + (width / 2) + ',' + (-margin.top / 2) + ')')
    .attr('text-anchor', 'middle')
    .attr('font-weight', 600)
-   .text('Naturaleza jurídica ');
+   .text('Sector');
 
 // Appending X axis and formatting the text
 g.append('g')
