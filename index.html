@@ -1,21 +1,134 @@
-<html>
+<!DOCTYPE html>
+<meta charset='utf-8'>
+<style> /* CSS styling */
+
+  body {
+      font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+      font-size: 14px;
+  }
+
+  .bar {
+    border: 1px solid #0b3536;
+    border-radius: 6px;
+    fill: #d61c00;
+  }
+
+  #viz .barText {
+    fill: #f5faf8;
+    font-weight: 500;
+  }
+
+  .axisY text, .axisX text, .headerText text{
+    fill: #d43d2f;
+  }
+
+  #viz svg {
+    background-color: #bfbd81;
+  }
+
+</style>
 <head>
-  <script src="http://d3js.org/d3.v4.min.js"></script>
-  <script src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
-  <title>Sector</title>
+  <title>Primera Grafica Chart</title>
 </head>
 <body>
-  <script type="text/javascript">
-    var svg = dimple.newSvg("body", 500, 500);
-    var data = [
-      { "Sector":"Oficial", "No. de entidades":117 },
-      { "Sector":"Privada", "No. de entidades":243 }
-    ];
-    var chart = new dimple.chart(svg, data);
-    chart.addCategoryAxis("x", "Sector");
-    chart.addMeasureAxis("y", "No. de entidades");
-    chart.addSeries(null, dimple.plot.bar);
-    chart.draw();
-  </script>
+  <div class='container'>
+    <div id='viz'></div>
+  </div>
+<script src='https://d3js.org/d3.v4.min.js'></script>
+<script>
+
+// Given sample data
+var sData ={'SEMANA 1':60,
+                 'S2':55,
+                 'S3': 50,
+                 'S4': 45,
+                 'S5': 40,
+                 'S6': 35,
+                 'S7': 30,
+                 'S8': 25,
+                 'S9': 20,
+                 'S10': 15};
+
+// Creating new arrays from the data, separating weeks from the numbers
+var weeks  = Object.keys(sData);
+var values = Object.values(sData);
+  
+var someData = Object.keys(sData).map(function(key) {
+  return [key, sData[key]];
+});
+// Setting the margin and dimensions of the work area
+var margin = {top: 50, right: 20, bottom: 30, left: 30},
+    width = 760 - margin.left - margin.right,
+    height = 380 - margin.top - margin.bottom;
+
+// Creating the scale variables and setting the ranges
+var xScale = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+    yScale = d3.scaleLinear().rangeRound([height, 0]);
+
+// Adjusting data by assigning domain to the range of the scale
+xScale.domain(weeks);
+yScale.domain([0, d3.max(values)]);
+
+// Appending the svg object to the div on the page
+var svg = d3.select('#viz').append('svg')
+    .attr('width', width + margin.left + margin.right)
+    .attr('height', height + margin.top + margin.bottom);
+
+// Appending the 'group' element to the svg
+// Moving the 'group' element to the top left margin
+var g = svg.append('g')
+    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+// Adding header to the chart
+g.attr('class', 'headerText')
+   .append('text')
+   .attr('transform', 'translate(' + (width / 2) + ',' + (-margin.top / 2) + ')')
+   .attr('text-anchor', 'middle')
+   .attr('font-weight', 600)
+   .text('Primera Grafica de barras');
+
+// Appending X axis and formatting the text
+g.append('g')
+    .attr('class', 'axisX')
+    .attr('transform', 'translate(0,' + height + ')')
+    .call(d3.axisBottom(xScale))
+    .attr('font-weight', 'bold');
+
+// Appending Y axis
+g.append('g')
+    .attr('class', 'axisY')
+    .call(d3.axisLeft(yScale).ticks(10));
+
+// Creating chart
+var chart = g.selectAll('bar')
+    .data(someData)
+    .enter().append('g')
+
+// Appending bar chart to the chart
+chart.append('rect')
+    .attr('class', 'bar')
+    .attr('x', function(d) { return xScale(d[0]); })
+    .attr('height', function(d) { return height - yScale(d[1]); })
+    .attr('y', function(d) { return yScale(d[1]); })
+    .attr('width', xScale.bandwidth());
+
+// Appending text to each bar chart
+chart.append('text')
+    .attr('class', 'barText')
+    .attr('x', function(d) { return xScale(d[0]) })
+    .attr('y', function(d) { return yScale(d[1]); })
+    .attr('dx', xScale.bandwidth()/2)
+    .attr('dy', 20)
+    .attr('text-anchor', 'middle')
+    .text(function(d){ return d[1]; });
+
+// Adding mouseover and mouseout functions to the chart
+chart.on('mouseover', function(d){
+      d3.select(this).attr('opacity', 0.7);
+      })
+    .on('mouseout', function(d){
+      d3.select(this)
+        .attr('opacity', 1)});
+
+</script>
 </body>
-</html>
