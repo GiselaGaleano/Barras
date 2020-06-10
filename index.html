@@ -10,7 +10,7 @@
   .bar {
     border: 1px solid #0b3536;
     border-radius: 6px;
-    fill: #d61c00;
+    fill: #CBA81D;
   }
 
   #viz .barText {
@@ -19,16 +19,16 @@
   }
 
   .axisY text, .axisX text, .headerText text{
-    fill: #d43d2f;
+    fill: #CD9D2C;
   }
 
   #viz svg {
-    background-color: #bfbd81;
+    background-color: #FEFBF4;
   }
 
 </style>
 <head>
-  <title>Primera Grafica Chart</title>
+  <title>Sector</title>
 </head>
 <body>
   <div class='container'>
@@ -38,16 +38,8 @@
 <script>
 
 // Given sample data
-var sData ={'SEMANA 1':60,
-                 'S2':55,
-                 'S3': 50,
-                 'S4': 45,
-                 'S5': 40,
-                 'S6': 35,
-                 'S7': 30,
-                 'S8': 25,
-                 'S9': 20,
-                 'S10': 15};
+var sData ={'Oficial':117,
+            'Privado': 243};
 
 // Creating new arrays from the data, separating weeks from the numbers
 var weeks  = Object.keys(sData);
@@ -85,7 +77,7 @@ g.attr('class', 'headerText')
    .attr('transform', 'translate(' + (width / 2) + ',' + (-margin.top / 2) + ')')
    .attr('text-anchor', 'middle')
    .attr('font-weight', 600)
-   .text('Primera Grafica de barras');
+   .text('Naturaleza jurídica ');
 
 // Appending X axis and formatting the text
 g.append('g')
