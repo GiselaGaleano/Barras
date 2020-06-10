@@ -51,11 +51,11 @@ var someData = Object.keys(sData).map(function(key) {
 });
 // Setting the margin and dimensions of the work area
 var margin = {top: 50, right: 20, bottom: 30, left: 30},
-    width = 760 - margin.left - margin.right,
-    height = 380 - margin.top - margin.bottom;
+    width = 700 - margin.left - margin.right,
+    height = 250 - margin.top - margin.bottom;
 
 // Creating the scale variables and setting the ranges
-var xScale = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+var xScale = d3.scaleBand().rangeRound([0, width]).padding(0.2),
     yScale = d3.scaleLinear().rangeRound([height, 0]);
 
 // Adjusting data by assigning domain to the range of the scale
@@ -90,7 +90,7 @@ g.append('g')
 // Appending Y axis
 g.append('g')
     .attr('class', 'axisY')
-    .call(d3.axisLeft(yScale).ticks(10));
+    .call(d3.axisLeft(yScale).ticks(3));
 
 // Creating chart
 var chart = g.selectAll('bar')
